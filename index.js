@@ -9,7 +9,7 @@ async function run() {
             console.log('ERROR: Token was not retrieved correctly and is falsy.');
             core.setFailed('Error: token was not correctly interpreted');
         }
-        const octokit = new github.GitHub(thisToken);
+        const octokit = new github.getOctokit(thisToken);
         // get comment
         const thisComment = github.context.payload['comment']['body'];
         const thisCommentLower = thisComment.toLowerCase();
