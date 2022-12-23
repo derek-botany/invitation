@@ -41,6 +41,7 @@ async function run() {
             } else {
                 console.log('not an owner')
             }
+        }
                 
 //             /*
 //             // check if user is a collaborator
@@ -86,11 +87,11 @@ async function run() {
 //         } else {
 //             console.log('User comment is not an invitation request. Exiting.');
 //         }
-//     } catch (error) {
-//         console.log('ERROR: ' + error.message + ' occurred at ' + error.fileName + ':' + error.lineNumber);
-//         console.log('Full error: ' + error);
-//         core.setFailed(error.message);
-//     }
+    } catch (error) {
+        console.log('ERROR: ' + error.message + ' occurred at ' + error.fileName + ':' + error.lineNumber);
+        console.log('Full error: ' + error);
+        core.setFailed(error.message);
+    }
 }
 
  run()
