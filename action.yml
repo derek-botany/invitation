@@ -1,0 +1,8 @@
+name: 'InvitationLabel'
+description: 'Add a new collaborator to repo.'
+runs:
+  using: 'node16'
+  main: 'index.js'
+branding:
+  color: 'purple'
+  icon: 'user-plus'
