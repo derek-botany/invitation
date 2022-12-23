@@ -8,7 +8,7 @@ jobs:
     name: Add collaborator!
     runs-on: ubuntu-latest
     steps:
-      - uses: derek-botany/invitation@master
+      - uses: derek-botany/invitation@main
         name: Perform invitation action
         env:
           # REQUIRED
