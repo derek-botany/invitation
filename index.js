@@ -91,6 +91,6 @@ async function run() {
 //         console.log('Full error: ' + error);
 //         core.setFailed(error.message);
 //     }
-// }
+}
 
  run()
