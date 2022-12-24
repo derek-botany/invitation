@@ -24,7 +24,7 @@ async function checkCollaborators(octokit, thisOwner, thisRepo, thisUsername) {
        
     }
     console.log(returnVal)
-  return response
+  return returnVal
  
 }
 
