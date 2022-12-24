@@ -2,11 +2,12 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 
 async function checkCollaborators(octokit, thisOwner, thisRepo, thisUsername) {
+    console.log('hey')
     try {
         await octokit.rest.repos.checkCollaborator({
-            owner: thisOwner,
-            repo: thisRepo,
-            username: thisUsername,
+            owner: 'derek-botany',
+            repo: 'invitation',
+            username: 'blackgirlbytes',
           });
     } catch(error) {
        console.log(error) 
