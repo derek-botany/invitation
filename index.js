@@ -93,25 +93,26 @@ async function run() {
         } 
         
         const isUserCollaborator = await checkCollaborators(octokit, thisOwner, thisRepo, thisUsername)
+        console.log(isUserCollaborator)
 
-        if(isUserCollaborator.status == 204){
-            const comment = `@${thisUsername} is already a member of this repository.`
-            const label = `duplicate request`
-            await addComment(octokit, thisOwner, thisRepo, thisIssueNumber, comment);
-            await addLabel(octokit, thisOwner, thisRepo, thisIssueNumber, label);
-            // close issue
-            await closeIssue(octokit, thisOwner, thisRepo, thisIssueNumber);
-        } else {
-                await addCollaborator(octokit, thisOwner, thisRepo, thisUsername)
-                // add comment to issue
-                const comment = `@${thisUsername} has been added as a member of this repository. Please check your email or notifications for an invitation.`
-                const label = 'collaborator added'
-                await addComment(octokit, thisOwner, thisRepo, thisIssueNumber, comment);
-                // add label to issue
-                await addLabel(octokit, thisOwner, thisRepo, thisIssueNumber, label);
-                // close issue
-                await closeIssue(octokit, thisOwner, thisRepo, thisIssueNumber);
-        }
+        // if(isUserCollaborator.status == 204){
+        //     const comment = `@${thisUsername} is already a member of this repository.`
+        //     const label = `duplicate request`
+        //     await addComment(octokit, thisOwner, thisRepo, thisIssueNumber, comment);
+        //     await addLabel(octokit, thisOwner, thisRepo, thisIssueNumber, label);
+        //     // close issue
+        //     await closeIssue(octokit, thisOwner, thisRepo, thisIssueNumber);
+        // } else {
+        //         await addCollaborator(octokit, thisOwner, thisRepo, thisUsername)
+        //         // add comment to issue
+        //         const comment = `@${thisUsername} has been added as a member of this repository. Please check your email or notifications for an invitation.`
+        //         const label = 'collaborator added'
+        //         await addComment(octokit, thisOwner, thisRepo, thisIssueNumber, comment);
+        //         // add label to issue
+        //         await addLabel(octokit, thisOwner, thisRepo, thisIssueNumber, label);
+        //         // close issue
+        //         await closeIssue(octokit, thisOwner, thisRepo, thisIssueNumber);
+        // }
     } catch (error) {
         console.log('ERROR: ' + error.message + ' occurred at ' + error.fileName + ':' + error.lineNumber);
         console.log('Full error: ' + error);
