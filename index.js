@@ -59,7 +59,7 @@ async function run() {
             } else {
                 console.log('not a collaborator. please add function')
             }
-                
+        }
 //             /*
 //             // check if user is a collaborator
            
