@@ -13,6 +13,18 @@ async function checkCollaborators(octokit, thisOwner, thisRepo, thisUsername) {
     }
 }
 
+async function addCollaborator(octokit, thisOwner, thisRepo, thisUsername) {
+    try {
+        await octokit.rest.repos.addCollaborator({
+            owner: thisOwner,
+            repo: thisRepo,
+            username: thisUsername,
+          });
+        } catch(error) {
+            console.log(error) 
+         }
+}
+
 async function run() {
     try {
         // create Octokit client
@@ -57,6 +69,7 @@ async function run() {
 
             if(isUserCollaborator == undefined) {
                console.log('we need to add collaborator')
+               await addCollaborator(octokit, thisOwner, thisRepo, thisUsername)
             } else {
                 console.log('User is already a collaborator; exiting.');
                 process.exit(0);
