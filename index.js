@@ -2,7 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 
 async function checkCollaborators(octokit, thisOwner, thisRepo, thisUsername) {
-    let returnVal;
+    let returnVal = 'not a collaborator';
     try {
         const response =  await octokit.rest.repos.checkCollaborator({
             owner: thisOwner,
@@ -18,16 +18,12 @@ async function checkCollaborators(octokit, thisOwner, thisRepo, thisUsername) {
             returnVal= 'not collaborator'
             console.log('else statement got set to return valu')
         }
-    } else {
-        returnVal = 'not collaborator'
     }
     }catch (err) {
-        returnVal = 'no collaborator'
         return err
        
     }
-
-  console.log('hello', returnVal, 'in between should be the value')
+    console.log(returnVal)
   return returnVal
  
 }
