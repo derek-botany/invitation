@@ -81,7 +81,7 @@ async function run() {
         const thisUsername = issueTitle.match(regex)[0];
         const thisRepo = github.context.payload.repository.name
         const thisOwner = github.context.payload.repository.owner.login
-        const thisIssueNumber = github.conxtext.payload.issue.number
+        const thisIssueNumber = github.context.payload.issue.number
      
    
         console.log('Parsed event values:\n\tRepo: ' + thisRepo + '\n\tUsername of commenter: ' +
@@ -97,20 +97,20 @@ async function run() {
         if(isUserCollaborator.status == 204){
             const comment = `@${thisUsername} is already a member of this repository.`
             const label = `duplicate request`
-            // await addComment(octokit, thisOwner, thisRepo, thisIssueNumber, comment);
-            // await addLabel(octokit, thisOwner, thisRepo, thisIssueNumber, label);
-            // // close issue
-            // await closeIssue(octokit, thisOwner, thisRepo, thisIssueNumber);
+            await addComment(octokit, thisOwner, thisRepo, thisIssueNumber, comment);
+            await addLabel(octokit, thisOwner, thisRepo, thisIssueNumber, label);
+            // close issue
+            await closeIssue(octokit, thisOwner, thisRepo, thisIssueNumber);
         } else {
                 await addCollaborator(octokit, thisOwner, thisRepo, thisUsername)
                 // add comment to issue
-                // const comment = `@${thisUsername} has been added as a member of this repository. Please check your email or notifications for an invitation.`
-                // const label = 'collaborator added'
-                // await addComment(octokit, thisOwner, thisRepo, thisIssueNumber, comment);
-                // // add label to issue
-                // await addLabel(octokit, thisOwner, thisRepo, thisIssueNumber, label);
-                // // close issue
-                // await closeIssue(octokit, thisOwner, thisRepo, thisIssueNumber);
+                const comment = `@${thisUsername} has been added as a member of this repository. Please check your email or notifications for an invitation.`
+                const label = 'collaborator added'
+                await addComment(octokit, thisOwner, thisRepo, thisIssueNumber, comment);
+                // add label to issue
+                await addLabel(octokit, thisOwner, thisRepo, thisIssueNumber, label);
+                // close issue
+                await closeIssue(octokit, thisOwner, thisRepo, thisIssueNumber);
         }
     } catch (error) {
         console.log('ERROR: ' + error.message + ' occurred at ' + error.fileName + ':' + error.lineNumber);
