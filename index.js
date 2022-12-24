@@ -14,15 +14,20 @@ async function checkCollaborators(octokit, thisOwner, thisRepo, thisUsername) {
 }
 
 async function addCollaborator(octokit, thisOwner, thisRepo, thisUsername) {
-    try {
-        await octokit.rest.repos.addCollaborator({
-            owner: thisOwner,
-            repo: thisRepo,
-            username: thisUsername,
-          });
-        } catch(error) {
-            console.log(error) 
-         }
+    console.log({
+        'owner': thisOwner,
+        'thisRepo': thisRepo,
+        'thisUsername': thisUsername
+    })
+    // try {
+    //     await octokit.rest.repos.addCollaborator({
+    //         owner: thisOwner,
+    //         repo: thisRepo,
+    //         username: thisUsername,
+    //       });
+    //     } catch(error) {
+    //         console.log(error) 
+    //      }
 }
 
 async function run() {
