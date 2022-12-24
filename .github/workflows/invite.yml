@@ -1,10 +1,12 @@
 name: Invitationlabel
 on:
-  issue_comment:
-    types: [labeled]
+  issues:
+    types:
+      - labeled
 
 jobs:
   build:
+    if:  github.event.label.name == 'approved'
     name: Add collaborator!
     runs-on: ubuntu-latest
     steps:
