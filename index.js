@@ -38,8 +38,14 @@ async function run() {
         const octokit = new github.getOctokit(thisToken);
   
         // get comment
-        const thisIssue = github.context.payload;
-        console.log('FIND THE ISSUE',thisIssue)
+        const issueBody = github.context.payload.issue.body;
+        const regex = /(?<=@)\w+/g;
+        const thisUsername = issueBody.match(regex);
+        const thisRepo = github.context.payload.issue.html_url
+        console.log('this username', thisUsername)
+        console.log('this repo', thisRepo)
+        console.log('github context', github.context.payload, 'github context')
+
    
         // const thisCommentLower = thisComment.toLowerCase();
 
