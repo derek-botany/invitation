@@ -42,10 +42,8 @@ async function run() {
         const regex = /(?<=@)\w+/g;
         const thisUsername = issueBody.match(regex);
         const thisRepo = github.context.payload.issue.html_url
-        console.log('this username', thisUsername)
-        console.log('this repo', thisRepo)
-        console.log('github context', github.context.payload, 'github context')
-        console.log('done')
+        const thisOwner = github.context.payload.repository.owner.login
+        console.log('this owner', thisOwner, 'this owner')
    
         // const thisCommentLower = thisComment.toLowerCase();
 
