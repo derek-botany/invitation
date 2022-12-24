@@ -100,10 +100,6 @@ async function run() {
     
             if (options.method == 'PUT' && response.status == 204) {
                 // response has no body; log this info and exit
-                await addComment(octokit, thisOwner, thisRepo, thisIssueNumber, comment);
-                await addLabel(octokit, thisOwner, thisRepo, thisIssueNumber, label);
-                // close issue
-                await closeIssue(octokit, thisOwner, thisRepo, thisIssueNumber);
                 console.log('User is already a collaborator; exiting.');
                 process.exit(0);
             }
