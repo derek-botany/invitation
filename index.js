@@ -81,7 +81,7 @@ async function run() {
         const thisUsername = issueTitle.match(regex)[0];
         const thisRepo = github.context.payload.repository.name
         const thisOwner = github.context.payload.repository.owner.login
-        const thisIssueNumber = github.conxtext.payload.issue.number
+        // const thisIssueNumber = github.conxtext.payload.issue.number
      
    
         console.log('Parsed event values:\n\tRepo: ' + thisRepo + '\n\tUsername of commenter: ' +
