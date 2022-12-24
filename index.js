@@ -27,13 +27,15 @@ async function addCollaborator(octokit, thisOwner, thisRepo, thisUsername) {
 }
 
 async function commentOnIssue(octokit, thisOwner, thisRepo, thisUsername, issueNumber) {
+    console.log('here')
     try {
-        await octokit.rest.issues.createComment({
+     const response =   await octokit.rest.issues.createComment({
             owner: thisOwner,
             repo: thisRepo,
             issue_number: issueNumber,
             body: `@${thisUsername}, you've been invited to collaborate on this repository. Please accept the invitation in your email or GitHub notifications.`,
           });
+          console.log('comment on issue', response)
         } catch(error) {
             console.log(error) 
          }
@@ -88,7 +90,7 @@ async function run() {
             console.log('we need to add collaborator')
             await addCollaborator(octokit, thisOwner, thisRepo, thisUsername)
             await commentOnIssue(octokit, thisOwner, thisRepo, thisUsername, issueNumber)
-            await closeIssue(octokit, thisOwner, thisRepo, issueNumber)
+            // await closeIssue(octokit, thisOwner, thisRepo, issueNumber)
         } else {
             console.log('User is already a collaborator; exiting.');
             process.exit(0);
