@@ -62,6 +62,7 @@ async function run() {
             console.log('user is already added')
         } else {
             (console.log('we need to add collaborator'))
+            await addCollaborator(octokit, thisOwner, thisRepo, thisUsername)
         }
         // if (isUserCollaborator == undefined) {
         //     console.log('we need to add collaborator')
