@@ -96,7 +96,8 @@ async function run() {
             console.log('we need to add collaborator')
             const collaboratorAdded = await addCollaborator(octokit, thisOwner, thisRepo, thisUsername)
             if(collaboratorAdded.status == 204) {
-                await commentOnIssue(octokit, thisOwner, thisRepo, thisUsername, issueNumber)
+                console.log('TRY THIS WE ARE HERE!!!')
+                // await commentOnIssue(octokit, thisOwner, thisRepo, thisUsername, issueNumber)
                 // await closeIssue(octokit, thisOwner, thisRepo, issueNumber)
             }
           
