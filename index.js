@@ -26,20 +26,20 @@ async function addCollaborator(octokit, thisOwner, thisRepo, thisUsername) {
          }
 }
 
-async function commentOnIssue(octokit, thisOwner, thisRepo, thisUsername, issueNumber) {
-    console.log('here')
-    try {
-     const response =   await octokit.rest.issues.createComment({
-            owner: thisOwner,
-            repo: thisRepo,
-            issue_number: issueNumber,
-            body: `@${thisUsername}, you've been invited to collaborate on this repository. Please accept the invitation in your email or GitHub notifications.`,
-          });
-          console.log('comment on issue', response)
-        } catch(error) {
-            console.log(error) 
-         }
-}
+// async function commentOnIssue(octokit, thisOwner, thisRepo, thisUsername, issueNumber) {
+//     console.log('here')
+//     try {
+//      const response =   await octokit.rest.issues.createComment({
+//             owner: thisOwner,
+//             repo: thisRepo,
+//             issue_number: issueNumber,
+//             body: `@${thisUsername}, you've been invited to collaborate on this repository. Please accept the invitation in your email or GitHub notifications.`,
+//           });
+//           console.log('comment on issue', response)
+//         } catch(error) {
+//             console.log(error) 
+//          }
+// }
 
 async function closeIssue(octokit, thisOwner, thisRepo, issueNumber) {
     try {
@@ -73,7 +73,7 @@ async function run() {
         const thisRepo = github.context.payload.issue.html_url
         const thisOwner = github.context.payload.repository.owner.login
         const issueNumber = github.context.payload.issue.number
-     
+        console.log(issueNumber)
    
         console.log('Parsed event values:\n\tRepo: ' + thisRepo + '\n\tUsername of commenter: ' +
             thisUsername + '\n\tRepo Owner: ' + thisOwner);
