@@ -45,13 +45,15 @@ async function run() {
                 
 //             /*
 //             // check if user is a collaborator
-            const { data: checkedCollabStatus } = await octokit.repos.checkCollaborator({
+            const { data: checkedCollabStatus } = await octokit.rest.repos.checkCollaborator({
                 owner: thisOwner,
                 repo: thisRepo,
                 username: thisUsername,
             });
+            console.log(checkedCollabStatus)
 
-            console.log('checking collab status', checkedCollabStatus);
+
+            
 //             */
 //             // get response for addCollaborator call
 //             // add hook to handle empty response body
