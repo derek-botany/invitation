@@ -12,6 +12,7 @@ async function checkCollaborators(octokit, thisOwner, thisRepo, thisUsername) {
        console.log(error) 
     }
 }
+
 async function run() {
     try {
         // create Octokit client
@@ -53,13 +54,13 @@ async function run() {
                 console.log('not an owner')
             }
             const isUserCollaborator = await checkCollaborators(octokit, thisOwner, thisRepo, thisUsername)
-            console.log('isUserCollaborator', isUserCollaborator, 'is status a property')
-            // if(isUserCollaborator.status == 204) {
-            //     console.log('User is already a collaborator; exiting.');
-            //     process.exit(0);
-            // } else {
-            //     console.log('not a collaborator. please add function')
-            // }
+
+            if(isUserCollaborator == undefined) {
+               console.log('we need to add collaborator')
+            } else {
+                console.log('User is already a collaborator; exiting.');
+                process.exit(0);
+            }
         }
 //             /*
 //             // check if user is a collaborator
