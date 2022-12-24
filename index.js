@@ -120,7 +120,8 @@ async function run() {
         //         process.exit(0);
         //     }
         // });
-        await checkCollaborators(octokit, thisOwner, thisRepo, thisUsername)
+        const whatIsInHere = await checkCollaborators(octokit, thisOwner, thisRepo, thisUsername)
+        console.log('what is in here', whatIsInHere)
         // if(isUserCollaborator.status == 204){
         //     const comment = `@${thisUsername} is already a member of this repository.`
         //     const label = `duplicate request`
