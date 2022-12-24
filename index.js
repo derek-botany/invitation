@@ -10,7 +10,7 @@ async function checkCollaborators(octokit, thisOwner, thisRepo, thisUsername) {
             username: thisUsername,
           });
     } catch(error) {
-       console.log(error.) 
+       console.log(error) 
     }
 }
 
