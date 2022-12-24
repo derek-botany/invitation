@@ -44,7 +44,7 @@ async function run() {
             const listCollaborators = await octokit.rest.repos.checkCollaborator({
                 owner: 'derek-botany',
                 repo: 'test',
-                username: 'blackgirlbytes',
+                username: 'derek-botany',
               });
             console.log(listCollaborators)
         }
