@@ -43,10 +43,10 @@ async function run() {
         const thisRepo = github.context.payload.issue.html_url
         const thisOwner = github.context.payload.repository.owner.login
       
-  
-        let thisPermission = null;
-        console.log('Parsed event values:\n\tRepo: ' + thisRepo + '\n\tUsername of commenter: ' + 
-                    thisUsername + '\n\tRepo Owner: ' + thisOwner );
+      console.log('hello')
+        // let thisPermission = null;
+        // console.log('Parsed event values:\n\tRepo: ' + thisRepo + '\n\tUsername of commenter: ' + 
+        //             thisUsername + '\n\tRepo Owner: ' + thisOwner );
 
         // check to make sure commenter is not owner (gives big error energy)
         // if (thisUsername == thisOwner) {
