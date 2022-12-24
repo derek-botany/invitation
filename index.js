@@ -42,6 +42,7 @@ async function run() {
         const regex = /(?<=@)\w+/g;
         const thisUsername = issueTitle.match(regex);
         const thisRepo = github.context.payload.issue.html_url
+        const thisOwner = github.context.payload.repository.owner.login
      
    
         console.log('Parsed event values:\n\tRepo: ' + thisRepo + '\n\tUsername of commenter: ' +
