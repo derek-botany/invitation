@@ -41,10 +41,11 @@ async function run() {
             } else {
                 console.log('not an owner')
             }
-            const listCollaborators = await octokit.rest.repos.listCollaborators({
-                owner: thisOwner,
-                repo: thisRepo
-            });
+            const listCollaborators = await octokit.rest.repos.checkCollaborator({
+                owner: 'derek-botany',
+                repo: 'test',
+                username: 'blackgirlbytes',
+              });
             console.log(listCollaborators)
         }
                 
