@@ -93,24 +93,24 @@ async function run() {
         } 
         
        
-        octokit.hook.after("request", async (response, options) => {
-            console.log("Request options:\n" + JSON.stringify(options));
-            console.log("Request response:\n" + JSON.stringify(response));
-            console.log(`${options.method} ${options.url}: ${response.status}`);
+        // octokit.hook.after("request", async (response, options) => {
+        //     console.log("Request options:\n" + JSON.stringify(options));
+        //     console.log("Request response:\n" + JSON.stringify(response));
+        //     console.log(`${options.method} ${options.url}: ${response.status}`);
     
-            if (options.method == 'PUT' && response.status == 204) {
-                // response has no body; log this info and exit
-                console.log('User is already a collaborator; exiting.');
-                process.exit(0);
-            }
-        });
+        //     if (options.method == 'PUT' && response.status == 204) {
+        //         // response has no body; log this info and exit
+        //         console.log('User is already a collaborator; exiting.');
+        //         process.exit(0);
+        //     }
+        // });
 
         // if(isUserCollaborator.status == 204){
         //     const comment = `@${thisUsername} is already a member of this repository.`
         //     const label = `duplicate request`
         
         // } else {
-            await addCollaborator(octokit, thisOwner, thisRepo, thisUsername)
+            // await addCollaborator(octokit, thisOwner, thisRepo, thisUsername)
         //         // add comment to issue
         //         const comment = `@${thisUsername} has been added as a member of this repository. Please check your email or notifications for an invitation.`
         //         const label = 'collaborator added'
