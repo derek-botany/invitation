@@ -26,20 +26,26 @@ async function addCollaborator(octokit, thisOwner, thisRepo, thisUsername) {
          }
 }
 
-// async function commentOnIssue(octokit, thisOwner, thisRepo, thisUsername, issueNumber) {
-//     console.log('here')
-//     try {
-//      const response =   await octokit.rest.issues.createComment({
-//             owner: thisOwner,
-//             repo: thisRepo,
-//             issue_number: issueNumber,
-//             body: `@${thisUsername}, you've been invited to collaborate on this repository. Please accept the invitation in your email or GitHub notifications.`,
-//           });
-//           console.log('comment on issue', response)
-//         } catch(error) {
-//             console.log(error) 
-//          }
-// }
+async function commentOnIssue(octokit, thisOwner, thisRepo, thisUsername, issueNumber) {
+    console.log('here')
+    console.log(thisOwner)
+    console.log(thisRepo)
+    console.log(thisUsername)
+    console.log(issueNumber)
+    // try {
+    //  const response =   await octokit.rest.issues.createComment({
+    //     octokit.rest.issues.createComment({
+    //         owner:thisOwn,
+    //         repo: thisRepo,
+    //         issue_number: issueNumber,
+    //         body: 'hey',
+    //       });
+    //       });
+    //       console.log('comment on issue', response)
+    //     } catch(error) {
+    //         console.log(error) 
+    //      }
+}
 
 async function closeIssue(octokit, thisOwner, thisRepo, issueNumber) {
     try {
