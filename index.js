@@ -103,8 +103,8 @@ async function run() {
             // await closeIssue(octokit, thisOwner, thisRepo, thisIssueNumber);
         } else {
             const collaboratorAdded = await addCollaborator(octokit, thisOwner, thisRepo, thisUsername)
-           
-            if (collaboratorAdded.status == 201) {
+            console.log(collaboratorAdded)
+            // if (collaboratorAdded.status == 201) {
             //     console.log('THIS WORKS')
             //     // add comment to issue
             //     const comment = `@${thisUsername} has been added as a member of this repository. Please check your email or notifications for an invitation.`
@@ -115,7 +115,7 @@ async function run() {
             //     // close issue
             //     await closeIssue(octokit, thisOwner, thisRepo, thisIssueNumber);
 
-            }
+            // }
         }
     } catch (error) {
         console.log('ERROR: ' + error.message + ' occurred at ' + error.fileName + ':' + error.lineNumber);
