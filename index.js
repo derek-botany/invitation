@@ -38,7 +38,7 @@ async function run() {
         const octokit = new github.getOctokit(thisToken);
   
         // get comment
-        const issueBody = github.context.payload.issue.body;
+        const issueBody = github.context.payload.issue.title;
         const regex = /(?<=@)\w+/g;
         const thisUsername = issueBody.match(regex);
         const thisRepo = github.context.payload.issue.html_url
