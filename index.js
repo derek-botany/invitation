@@ -45,7 +45,7 @@ async function run() {
         console.log('this username', thisUsername)
         console.log('this repo', thisRepo)
         console.log('github context', github.context.payload, 'github context')
-
+        console.log('done')
    
         // const thisCommentLower = thisComment.toLowerCase();
 
