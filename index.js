@@ -2,38 +2,40 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 
 async function checkCollaborators(octokit, thisOwner, thisRepo, thisUsername) {
-    const response = await octokit.rest.repos.checkCollaborator({
-        owner: thisOwner,
-        repo: thisRepo,
-        username: thisUsername,
-    })
-    console.log(response)
+     
+      const response =  await octokit.rest.repos.checkCollaborator({
+            owner: thisOwner,
+            repo: thisRepo,
+            username: thisUsername,
+          });
+    return response
+   
 }
 
-async function addCollaborator(octokit, owner, repo, username) {
+async function addCollaborator(octokit, thisOwner, thisRepo, thisUsername) {
     try {
         await octokit.rest.repos.addCollaborator({
-            owner,
-            repo,
-            username,
-        });
-    } catch (error) {
-        console.log('ERROR: ' + error.message + ' occurred at ' + error.fileName + ':' + error.lineNumber);
-    }
+            owner: thisOwner,
+            repo: thisRepo,
+            username: thisUsername,
+          });
+        } catch(error) {
+            console.log('ERROR: ' + error.message + ' occurred at ' + error.fileName + ':' + error.lineNumber);
+         }
 }
 
-async function addComment(octokit, owner, repo, issueNumber, comment) {
-    try {
-        await octokit.rest.issues.createComment({
-            owner: owner,
-            repo: repo,
-            issue_number: issueNumber,
-            body: comment
-        });
-    } catch (error) {
-        console.log('ERROR: ' + error.message + ' occurred at ' + error.fileName + ':' + error.lineNumber);
+    async function addComment(octokit, thisOwner, thisRepo, thisIssueNumber, comment) {
+        try {
+            await octokit.rest.issues.createComment({
+                owner: thisOwner,
+                repo: thisRepo,
+                issue_number: thisIssueNumber,
+                body: comment
+            });
+        } catch (error) {
+            console.log('ERROR: ' + error.message + ' occurred at ' + error.fileName + ':' + error.lineNumber);
+        }
     }
-}
 
 async function closeIssue(octokit, thisOwner, thisRepo, thisIssueNumber) {
     try {
@@ -68,9 +70,10 @@ async function run() {
         if (!thisToken) {
             console.log('ERROR: Token was not retrieved correctly and is falsy.');
             core.setFailed('Error: token was not correctly interpreted');
+            console.log('was it received')
         }
         const octokit = new github.getOctokit(thisToken);
-
+  
         // get comment
         const issueTitle = github.context.payload.issue.title;
         const regex = /(?<=@)\w+/g;
@@ -78,36 +81,37 @@ async function run() {
         const thisRepo = github.context.payload.repository.name
         const thisOwner = github.context.payload.repository.owner.login
         const thisIssueNumber = github.context.payload.issue.number
-
-
+     
+   
         console.log('Parsed event values:\n\tRepo: ' + thisRepo + '\n\tUsername of commenter: ' +
-            thisUsername + '\n\tRepo Owner: ' + thisOwner + '\n\tIssue Number: ' + thisIssueNumber);
+            thisUsername + '\n\tRepo Owner: ' + thisOwner);
 
         // check to make sure commenter is not owner (gives big error energy)
         if (thisUsername == thisOwner) {
             console.log('Commenter is the owner of this repository; exiting.');
             process.exit(0);
-        }
-        console.log('slowly uncomment')
+        } 
+        
         const isUserCollaborator = await checkCollaborators(octokit, thisOwner, thisRepo, thisUsername)
-        // if (isUserCollaborator.status == 204) {
-        //     const comment = `@${thisUsername} is already a member of this repository.`
-        //     const label = `duplicate request`
-        //     await addComment(octokit, thisOwner, thisRepo, thisIssueNumber, comment);
-        //     await addLabel(octokit, thisOwner, thisRepo, thisIssueNumber, label);
-        //     // close issue
-        //     await closeIssue(octokit, thisOwner, thisRepo, thisIssueNumber);
-        // } else {
-        //     await addCollaborator(octokit, thisOwner, thisRepo, thisUsername)
-        //     // add comment to issue
-        //     const comment = `@${thisUsername} has been added as a member of this repository. Please check your email or notifications for an invitation.`
-        //     const label = 'collaborator added'
-        //     await addComment(octokit, thisOwner, thisRepo, thisIssueNumber, comment);
-        //     // add label to issue
-        //     await addLabel(octokit, thisOwner, thisRepo, thisIssueNumber, label);
-        //     // close issue
-        //     await closeIssue(octokit, thisOwner, thisRepo, thisIssueNumber);
-        // }
+        console.log('what is the value',isUserCollaborator, 'what is the value')
+        if(isUserCollaborator.status == 204){
+            const comment = `@${thisUsername} is already a member of this repository.`
+            const label = `duplicate request`
+            await addComment(octokit, thisOwner, thisRepo, thisIssueNumber, comment);
+            await addLabel(octokit, thisOwner, thisRepo, thisIssueNumber, label);
+            // close issue
+            await closeIssue(octokit, thisOwner, thisRepo, thisIssueNumber);
+        } else {
+                await addCollaborator(octokit, thisOwner, thisRepo, thisUsername)
+                // add comment to issue
+                const comment = `@${thisUsername} has been added as a member of this repository. Please check your email or notifications for an invitation.`
+                const label = 'collaborator added'
+                await addComment(octokit, thisOwner, thisRepo, thisIssueNumber, comment);
+                // add label to issue
+                await addLabel(octokit, thisOwner, thisRepo, thisIssueNumber, label);
+                // close issue
+                await closeIssue(octokit, thisOwner, thisRepo, thisIssueNumber);
+        }
     } catch (error) {
         console.log('ERROR: ' + error.message + ' occurred at ' + error.fileName + ':' + error.lineNumber);
         console.log('Full error: ' + error);
@@ -115,4 +119,4 @@ async function run() {
     }
 }
 
-run()
+ run()
