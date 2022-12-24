@@ -29,11 +29,10 @@ async function run() {
     try {
         // create Octokit client
         const thisToken = process.env.INVITATION_TOKEN;
-        console.log('this is the token', thisToken)
+      
         if (!thisToken) {
             console.log('ERROR: Token was not retrieved correctly and is falsy.');
             core.setFailed('Error: token was not correctly interpreted');
-            console.log('was it received')
         }
         const octokit = new github.getOctokit(thisToken);
   
@@ -47,24 +46,24 @@ async function run() {
   
         let thisPermission = null;
         console.log('Parsed event values:\n\tRepo: ' + thisRepo + '\n\tUsername of commenter: ' + 
-                    thisUsername + '\n\tRepo Owner: ' + thisOwner + '\n\tIssue number: ' + thisIssueNumber);
+                    thisUsername + '\n\tRepo Owner: ' + thisOwner );
 
         // check to make sure commenter is not owner (gives big error energy)
-        if (thisUsername == thisOwner) {
-            console.log('Commenter is the owner of this repository; exiting.');
-            process.exit(0);
-        } else {
-            console.log('not an owner')
-        }
-        const isUserCollaborator = await checkCollaborators(octokit, thisOwner, thisRepo, thisUsername)
+        // if (thisUsername == thisOwner) {
+        //     console.log('Commenter is the owner of this repository; exiting.');
+        //     process.exit(0);
+        // } else {
+        //     console.log('not an owner')
+        // }
+        // const isUserCollaborator = await checkCollaborators(octokit, thisOwner, thisRepo, thisUsername)
 
-        if(isUserCollaborator == undefined) {
-            console.log('we need to add collaborator')
-            await addCollaborator(octokit, thisOwner, thisRepo, thisUsername)
-        } else {
-            console.log('User is already a collaborator; exiting.');
-            process.exit(0);
-        }
+        // if(isUserCollaborator == undefined) {
+        //     console.log('we need to add collaborator')
+        //     await addCollaborator(octokit, thisOwner, thisRepo, thisUsername)
+        // } else {
+        //     console.log('User is already a collaborator; exiting.');
+        //     process.exit(0);
+        // }
     } catch (error) {
         console.log('ERROR: ' + error.message + ' occurred at ' + error.fileName + ':' + error.lineNumber);
         console.log('Full error: ' + error);
