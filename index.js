@@ -131,7 +131,7 @@ async function run() {
             await addLabel(octokit, thisOwner, thisRepo, thisIssueNumber, label);
             // close issue
             await closeIssue(octokit, thisOwner, thisRepo, thisIssueNumber);
-        } else {
+        } else if(isUserCollaborator.status == 204) {
             const comment = `@${thisUsername} is already a member of this repository.`
             const label = `duplicate request`
             await addComment(octokit, thisOwner, thisRepo, thisIssueNumber, comment);
