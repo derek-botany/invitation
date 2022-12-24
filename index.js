@@ -38,43 +38,44 @@ async function run() {
         const octokit = new github.getOctokit(thisToken);
   
         // get comment
-        const thisComment = github.context.payload['comment']['body'];
+        const thisIssue = github.context.payload;
+        console.log('FIND THE ISSUE',thisIssue)
    
-        const thisCommentLower = thisComment.toLowerCase();
+        // const thisCommentLower = thisComment.toLowerCase();
 
-        if (thisCommentLower.startsWith('inviteme') || thisCommentLower.startsWith('invite me')) {
-            /* begin core invitation logic */
-            // TODO: add support for mentioning a different user
-            // determine variable values
-            let thisRepo = github.context.payload['repository']['name'];    // e.g. 'inviteme'
+        // if (thisCommentLower.startsWith('inviteme') || thisCommentLower.startsWith('invite me')) {
+        //     /* begin core invitation logic */
+        //     // TODO: add support for mentioning a different user
+        //     // determine variable values
+        //     let thisRepo = github.context.payload['repository']['name'];    // e.g. 'inviteme'
            
-            let thisUsername = github.context.payload['comment']['user']['login'];  // e.g. 'etcadinfinitum'
+        //     let thisUsername = github.context.payload['comment']['user']['login'];  // e.g. 'etcadinfinitum'
   
-            let thisOwner = github.context.payload['repository']['owner']['login']; // e.g. 'etcadinfinitum'
+        //     let thisOwner = github.context.payload['repository']['owner']['login']; // e.g. 'etcadinfinitum'
 
-            let thisIssueNumber = github.context.payload['issue']['number'];        // e.g. 1
+        //     let thisIssueNumber = github.context.payload['issue']['number'];        // e.g. 1
        
-            let thisPermission = null;
-            console.log('Parsed event values:\n\tRepo: ' + thisRepo + '\n\tUsername of commenter: ' + 
-                        thisUsername + '\n\tRepo Owner: ' + thisOwner + '\n\tIssue number: ' + thisIssueNumber);
+        //     let thisPermission = null;
+        //     console.log('Parsed event values:\n\tRepo: ' + thisRepo + '\n\tUsername of commenter: ' + 
+        //                 thisUsername + '\n\tRepo Owner: ' + thisOwner + '\n\tIssue number: ' + thisIssueNumber);
 
-            // check to make sure commenter is not owner (gives big error energy)
-            if (thisUsername == thisOwner) {
-                console.log('Commenter is the owner of this repository; exiting.');
-                process.exit(0);
-            } else {
-                console.log('not an owner')
-            }
-            const isUserCollaborator = await checkCollaborators(octokit, thisOwner, thisRepo, thisUsername)
+        //     // check to make sure commenter is not owner (gives big error energy)
+        //     if (thisUsername == thisOwner) {
+        //         console.log('Commenter is the owner of this repository; exiting.');
+        //         process.exit(0);
+        //     } else {
+        //         console.log('not an owner')
+        //     }
+        //     const isUserCollaborator = await checkCollaborators(octokit, thisOwner, thisRepo, thisUsername)
 
-            if(isUserCollaborator == undefined) {
-               console.log('we need to add collaborator')
-               await addCollaborator(octokit, thisOwner, thisRepo, thisUsername)
-            } else {
-                console.log('User is already a collaborator; exiting.');
-                process.exit(0);
-            }
-        }
+        //     if(isUserCollaborator == undefined) {
+        //        console.log('we need to add collaborator')
+        //        await addCollaborator(octokit, thisOwner, thisRepo, thisUsername)
+        //     } else {
+        //         console.log('User is already a collaborator; exiting.');
+        //         process.exit(0);
+        //     }
+        // }
 //             /*
 //             // check if user is a collaborator
            
