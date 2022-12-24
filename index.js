@@ -23,7 +23,7 @@ async function checkCollaborators(octokit, thisOwner, thisRepo, thisUsername) {
     }
     }catch (err) {
         returnVal = 'no collaborator'
-        console.log(err)
+        return err
        
     }
 
