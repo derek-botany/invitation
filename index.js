@@ -10,7 +10,7 @@ async function checkCollaborators(octokit, thisOwner, thisRepo, thisUsername) {
             username: thisUsername,
           });
     } catch(error) {
-       console.log(error) 
+       console.log(error.) 
     }
 }
 
@@ -53,17 +53,23 @@ async function run() {
         if (thisUsername == thisOwner) {
             console.log('Commenter is the owner of this repository; exiting.');
             process.exit(0);
-        } else {
-        }
+        } 
+
+
+        
         const isUserCollaborator = await checkCollaborators(octokit, thisOwner, thisRepo, thisUsername)
-        console.log('this is user collaborator', isUserCollaborator)
-        if (isUserCollaborator == undefined) {
+        if(isUserCollaborator){
             console.log('we need to add collaborator')
-            await addCollaborator(octokit, thisOwner, thisRepo, thisUsername)
         } else {
-            console.log('User is already a collaborator; exiting.');
-            process.exit(0);
+            (console.log('user is already added'))
         }
+        // if (isUserCollaborator == undefined) {
+        //     console.log('we need to add collaborator')
+        //     await addCollaborator(octokit, thisOwner, thisRepo, thisUsername)
+        // } else {
+        //     console.log('User is already a collaborator; exiting.');
+        //     process.exit(0);
+        // }
     } catch (error) {
         console.log('ERROR: ' + error.message + ' occurred at ' + error.fileName + ':' + error.lineNumber);
         console.log('Full error: ' + error);
