@@ -89,7 +89,7 @@ async function run() {
             process.exit(0);
         }
         console.log('slowly uncomment')
-        // const isUserCollaborator = await checkCollaborators(octokit, thisOwner, thisRepo, thisUsername)
+        const isUserCollaborator = await checkCollaborators(octokit, thisOwner, thisRepo, thisUsername)
         // if (isUserCollaborator.status == 204) {
         //     const comment = `@${thisUsername} is already a member of this repository.`
         //     const label = `duplicate request`
