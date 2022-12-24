@@ -14,12 +14,6 @@ async function checkCollaborators(octokit, thisOwner, thisRepo, thisUsername) {
 }
 
 async function addCollaborator(octokit, thisOwner, thisRepo, thisUsername) {
-    console.log('what was the reason')
-    console.log({
-        'thisOwner': thisOwner,
-        'thisRepo': thisRepo,
-        'thisUsername': thisUsername
-    })
     try {
         await octokit.rest.repos.addCollaborator({
             owner: thisOwner,
@@ -27,15 +21,53 @@ async function addCollaborator(octokit, thisOwner, thisRepo, thisUsername) {
             username: thisUsername,
           });
         } catch(error) {
-            console.log(error) 
+            console.log('ERROR: ' + error.message + ' occurred at ' + error.fileName + ':' + error.lineNumber);
          }
+}
+
+    async function addComment(octokit, thisOwner, thisRepo, thisIssueNumber, comment) {
+        try {
+            await octokit.rest.issues.createComment({
+                owner: thisOwner,
+                repo: thisRepo,
+                issue_number: thisIssueNumber,
+                body: comment
+            });
+        } catch (error) {
+            console.log('ERROR: ' + error.message + ' occurred at ' + error.fileName + ':' + error.lineNumber);
+        }
+    }
+
+async function closeIssue(octokit, thisOwner, thisRepo, thisIssueNumber) {
+    try {
+        await octokit.rest.issues.update({
+            owner: thisOwner,
+            repo: thisRepo,
+            issue_number: thisIssueNumber,
+            state: 'closed'
+        });
+    } catch (error) {
+        console.log('ERROR: ' + error.message + ' occurred at ' + error.fileName + ':' + error.lineNumber);
+    }
+}
+
+async function addLabel(octokit, thisOwner, thisRepo, thisIssueNumber, label) {
+    try {
+        await octokit.rest.issues.addLabels({
+            owner: thisOwner,
+            repo: thisRepo,
+            issue_number: thisIssueNumber,
+            labels: [label]
+        });
+    } catch (error) {
+        console.log('ERROR: ' + error.message + ' occurred at ' + error.fileName + ':' + error.lineNumber);
+    }
 }
 
 async function run() {
     try {
         // create Octokit client
         const thisToken = process.env.INVITATION_TOKEN;
-        console.log('this is the token', thisToken)
         if (!thisToken) {
             console.log('ERROR: Token was not retrieved correctly and is falsy.');
             core.setFailed('Error: token was not correctly interpreted');
@@ -49,6 +81,7 @@ async function run() {
         const thisUsername = issueTitle.match(regex)[0];
         const thisRepo = github.context.payload.repository.name
         const thisOwner = github.context.payload.repository.owner.login
+        const thisIssueNumber = github.conxtext.payload.issue.number
      
    
         console.log('Parsed event values:\n\tRepo: ' + thisRepo + '\n\tUsername of commenter: ' +
@@ -59,24 +92,29 @@ async function run() {
             console.log('Commenter is the owner of this repository; exiting.');
             process.exit(0);
         } 
-
-
         
         const isUserCollaborator = await checkCollaborators(octokit, thisOwner, thisRepo, thisUsername)
-       console.log(isUserCollaborator, 'what is user collaborator')
         if(isUserCollaborator.status == 204){
-            console.log('user is already added')
+            const comment = `@${thisUsername} is already a member of this repository.`
+            const label = `duplicate request`
+            await addComment(octokit, thisOwner, thisRepo, thisIssueNumber, comment);
+            await addLabel(octokit, thisOwner, thisRepo, thisIssueNumber, label);
+            // close issue
+            await closeIssue(octokit, thisOwner, thisRepo, thisIssueNumber);
         } else {
-            (console.log('we need to add collaborator'))
             await addCollaborator(octokit, thisOwner, thisRepo, thisUsername)
+            if (addCollaborator.status == 201) {
+                // add comment to issue
+                const comment = `@${thisUsername} has been added as a member of this repository. Please check your email or notifications for an invitation.`
+                const label = 'collaborator added'
+                await addComment(octokit, thisOwner, thisRepo, thisIssueNumber, comment);
+                // add label to issue
+                await addLabel(octokit, thisOwner, thisRepo, thisIssueNumber, label);
+                // close issue
+                await closeIssue(octokit, thisOwner, thisRepo, thisIssueNumber);
+
+            }
         }
-        // if (isUserCollaborator == undefined) {
-        //     console.log('we need to add collaborator')
-        //     await addCollaborator(octokit, thisOwner, thisRepo, thisUsername)
-        // } else {
-        //     console.log('User is already a collaborator; exiting.');
-        //     process.exit(0);
-        // }
     } catch (error) {
         console.log('ERROR: ' + error.message + ' occurred at ' + error.fileName + ':' + error.lineNumber);
         console.log('Full error: ' + error);
