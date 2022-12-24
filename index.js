@@ -2,25 +2,27 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 
 async function checkCollaborators(octokit, thisOwner, thisRepo, thisUsername) {
-      let returnVal;
-      const response =  await octokit.rest.repos.checkCollaborator({
-            owner: thisOwner,
-            repo: thisRepo,
-            username: thisUsername,
-          });
-    if (response) {
-        console.log('it is a response')
-        if(response.status == 204) {
-            returnVal = 'already collaborator'
-            console.log('if statement got set to return valu')
-        } else {
-            returnVal= 'not collaborator'
-            console.log('else statement got set to return valu')
-        }
-    }
-    console.log(returnVal)
-    return returnVal
-   
+    let returnVal;
+    const response =  await octokit.rest.repos.checkCollaborator({
+          owner: thisOwner,
+          repo: thisRepo,
+          username: thisUsername,
+        });
+  if (response) {
+      console.log('it is a response')
+      if(response.status == 204) {
+          returnVal = 'already collaborator'
+          console.log('if statement got set to return valu')
+      } else {
+          returnVal= 'not collaborator'
+          console.log('else statement got set to return valu')
+      }
+  } else {
+      returnVal = 'not collaborator'
+  }
+  console.log(returnVal)
+  return returnVal
+ 
 }
 
 async function addCollaborator(octokit, thisOwner, thisRepo, thisUsername) {
