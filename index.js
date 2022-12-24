@@ -93,7 +93,7 @@ async function run() {
         } 
         
         const isUserCollaborator = await checkCollaborators(octokit, thisOwner, thisRepo, thisUsername)
-        console.log('what is the value',isUserCollaborator, 'what is the value')
+
         if(isUserCollaborator.status == 204){
             const comment = `@${thisUsername} is already a member of this repository.`
             const label = `duplicate request`
