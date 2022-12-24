@@ -94,9 +94,12 @@ async function run() {
         console.log('this is user collaborator', isUserCollaborator)
         if (isUserCollaborator == undefined) {
             console.log('we need to add collaborator')
-            await addCollaborator(octokit, thisOwner, thisRepo, thisUsername)
-            await commentOnIssue(octokit, thisOwner, thisRepo, thisUsername, issueNumber)
-            // await closeIssue(octokit, thisOwner, thisRepo, issueNumber)
+            const collaboratorAdded = await addCollaborator(octokit, thisOwner, thisRepo, thisUsername)
+            if(collaboratorAdded.status == 204) {
+                await commentOnIssue(octokit, thisOwner, thisRepo, thisUsername, issueNumber)
+                // await closeIssue(octokit, thisOwner, thisRepo, issueNumber)
+            }
+          
         } else {
             console.log('User is already a collaborator; exiting.');
             process.exit(0);
