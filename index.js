@@ -2,13 +2,24 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 
 async function checkCollaborators(octokit, thisOwner, thisRepo, thisUsername) {
-     
+      let returnVal;
       const response =  await octokit.rest.repos.checkCollaborator({
             owner: thisOwner,
             repo: thisRepo,
             username: thisUsername,
           });
-    return response
+    if (response) {
+        console.log('it is a response')
+        if(response.status == 204) {
+            returnVal = 'already collaborator'
+            console.log('if statement got set to return valu')
+        } else {
+            returnVal= 'not collaborator'
+            console.log('else statement got set to return valu')
+        }
+    }
+    console.log(returnValu)
+    return returnVal
    
 }
 
@@ -104,7 +115,7 @@ async function run() {
         //         process.exit(0);
         //     }
         // });
-
+        await checkCollaborators(octokit, thisOwner, thisRepo, thisUsername)
         // if(isUserCollaborator.status == 204){
         //     const comment = `@${thisUsername} is already a member of this repository.`
         //     const label = `duplicate request`
