@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-async function checkCollaborators(thisOwner, thisRepo, thisUsername) {
+async function checkCollaborators(octokit, thisOwner, thisRepo, thisUsername) {
     try {
         await octokit.rest.repos.checkCollaborator({
             owner: thisOwner,
@@ -52,7 +52,7 @@ async function run() {
             } else {
                 console.log('not an owner')
             }
-            const isUserCollaborator = await checkCollaborators(thisOwner, thisRepo, thisUsername)
+            const isUserCollaborator = await checkCollaborators(octokit, thisOwner, thisRepo, thisUsername)
             if(isUserCollaborator.status == 204) {
                 console.log('User is already a collaborator; exiting.');
                 process.exit(0);
