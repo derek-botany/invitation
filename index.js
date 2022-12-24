@@ -18,7 +18,7 @@ async function checkCollaborators(octokit, thisOwner, thisRepo, thisUsername) {
             console.log('else statement got set to return valu')
         }
     }
-    console.log(returnValu)
+    console.log(returnVal)
     return returnVal
    
 }
