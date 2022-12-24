@@ -14,20 +14,15 @@ async function checkCollaborators(octokit, thisOwner, thisRepo, thisUsername) {
 }
 
 async function addCollaborator(octokit, thisOwner, thisRepo, thisUsername) {
-    console.log({
-        'owner': thisOwner,
-        'thisRepo': thisRepo,
-        'thisUsername': thisUsername
-    })
-    // try {
-    //     await octokit.rest.repos.addCollaborator({
-    //         owner: thisOwner,
-    //         repo: thisRepo,
-    //         username: thisUsername,
-    //       });
-    //     } catch(error) {
-    //         console.log(error) 
-    //      }
+    try {
+        await octokit.rest.repos.addCollaborator({
+            owner: thisOwner,
+            repo: thisRepo,
+            username: thisUsername,
+          });
+        } catch(error) {
+            console.log(error) 
+         }
 }
 
 async function run() {
@@ -45,7 +40,7 @@ async function run() {
         // get comment
         const issueTitle = github.context.payload.issue.title;
         const regex = /(?<=@)\w+/g;
-        const thisUsername = issueTitle.match(regex);
+        const thisUsername = issueTitle.match(regex)[0];
         const thisRepo = github.context.payload.issue.html_url
         const thisOwner = github.context.payload.repository.owner.login
      
