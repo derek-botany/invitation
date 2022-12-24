@@ -57,7 +57,7 @@ async function run() {
             console.log('not an owner')
         }
         const isUserCollaborator = await checkCollaborators(octokit, thisOwner, thisRepo, thisUsername)
-
+        console.log('this is user collaborator', isUserCollaborator)
         if (isUserCollaborator == undefined) {
             console.log('we need to add collaborator')
             await addCollaborator(octokit, thisOwner, thisRepo, thisUsername)
