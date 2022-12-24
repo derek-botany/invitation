@@ -41,7 +41,7 @@ async function run() {
             } else {
                 console.log('not an owner')
             }
-            const { data: checkedCollabStatus } = await octokit.rest.repos.checkCollaborator({
+            const checkedCollabStatus = await octokit.rest.repos.checkCollaborator({
                 owner: thisOwner,
                 repo: thisRepo,
                 username: thisUsername,
