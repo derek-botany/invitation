@@ -5,9 +5,9 @@ async function checkCollaborators(octokit, thisOwner, thisRepo, thisUsername) {
     console.log('hey')
     try {
         await octokit.rest.repos.checkCollaborator({
-            owner: 'derek-botany',
-            repo: 'invitation',
-            username: 'blackgirlbytes',
+            owner: thisOwner,
+            repo: thisRepo,
+            username: thisUsername,
           });
     } catch(error) {
        console.log(error) 
@@ -17,9 +17,9 @@ async function checkCollaborators(octokit, thisOwner, thisRepo, thisUsername) {
 async function addCollaborator(octokit, thisOwner, thisRepo, thisUsername) {
     try {
         await octokit.rest.repos.addCollaborator({
-            owner: thisOwner,
-            repo: thisRepo,
-            username: thisUsername,
+            owner: 'derek-botany',
+            repo: 'invitation',
+            username: 'blackgirlbytes',
           });
         } catch(error) {
             console.log(error) 
