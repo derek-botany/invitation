@@ -1,7 +1,8 @@
 name: Invitationlabel
 on:
-  issue_comment:
-    types: [labeled]
+  issues:
+    types:
+      - labeled
 
 jobs:
   build:
