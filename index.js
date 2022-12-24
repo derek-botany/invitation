@@ -57,7 +57,7 @@ async function run() {
 
         
         const isUserCollaborator = await checkCollaborators(octokit, thisOwner, thisRepo, thisUsername)
-        if(isUserCollaborator === undefined){
+        if(isUserCollaborator.status == 204){
             console.log('we need to add collaborator')
         } else {
             (console.log('user is already added'))
